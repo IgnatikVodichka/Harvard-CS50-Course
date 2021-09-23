@@ -1,0 +1,11 @@
+sort1 uses: Bubble sort
+
+How do you know?: It is the fastest to quit from sorted list, so I suppose that there is some kind of exit if the list is already sorted.
+
+sort2 uses: Merge sort
+
+How do you know?: It was the fastest to sort random 50,000 and 50,000 reversed files.
+
+sort3 uses: Selection sort
+
+How do you know?: Because I found the other two methods, that's why I know that this one is selection.
