@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633522330387&amp;type=content-script&amp;dmn=ide-e9132bb434a54a98b002e003879eb262.ide.cs50.io&amp;app=com.brave.Browser.helper&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;uag="></script>
+<script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633522330387&amp;name=AdGuard%20Extra&amp;type=user-script"></script><script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633293879762&amp;type=content-script&amp;dmn=ide-e9132bb434a54a98b002e003879eb262.ide.cs50.io&amp;app=com.brave.Browser.helper&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;uag="></script>
+        <script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633293879762&amp;name=AdGuard%20Extra&amp;type=user-script"></script><script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633259660627&amp;type=content-script&amp;dmn=ide-e9132bb434a54a98b002e003879eb262.ide.cs50.io&amp;app=com.brave.Browser.helper&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;uag="></script>
+        <script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633259660627&amp;name=AdGuard%20Extra&amp;type=user-script"></script><script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633259660627&amp;type=content-script&amp;dmn=ide-e9132bb434a54a98b002e003879eb262.ide.cs50.io&amp;app=com.brave.Browser.helper&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;uag="></script>
+        <script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1633259660627&amp;name=AdGuard%20Extra&amp;type=user-script"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <link href="styles.css" rel="stylesheet">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <title>My Webpage</title>
+    </head>
+    <body onload=setInterval("rott()",15);>
+        <header>
+            <nav class = "navigation">
+                <a href="index.html" class="logo-link"><img id = "cat-logo" class = "cat-logo" src="img/cat.png" alt="cat-logo"/></a>
+                <div class="menu">
+                    <a class = "menu-item" href="index.html">ABOUT</a>
+                    <a class = "menu-item" href="hobbie.html">MY HOBBIE</a>
+                    <a class = "menu-item" href="exwork.html">EX WORK</a>
+                    <a class = "menu-item" href="socials.html">SOCIALS</a>
+                </div>
+            </nav>
+        </header>
+        <!-- about me container -->
+        <!-- about me main info container-->
+        <div class="main-info-container" data-aos="flip-right" data-aos-delay="1000">
+            <h1>My Ex.Work:</h1>
+            <hr style="width: 50%; height: 3px; text-align: left; margin-left: 0"/>
+            <div class= "about-exwork">
+                <img class = "container-ship" src="img/container-ship.jpeg" alt="container-ship"/>
+                <p class="work-paragraph">
+                A container ship is a cargo ship that carries all of its load in truck-size intermodal containers, in a technique called containerization.
+                Container ships are a common means of commercial intermodal freight transport and now carry most seagoing non-bulk cargo.
+                Container ship capacity is measured in twenty-foot equivalent units. Typical loads are a mix of 20-foot and 40-foot ISO-standard containers, with the latter predominant.
+                Today, about 90% of non-bulk cargo worldwide is transported by container ships, and the largest modern container ships can carry up to 24,000 TEU.
+                Container ships now rival crude oil tankers and bulk carriers as the largest commercial seaborne vessels.
+                </p>
+            </div>
+
+        </div>
+        <footer id = "footer">
+            <a href="https://cs50.harvard.edu/x/2021/psets/8/homepage/"><span class = "footer-text">Made for Problem Set number 8 on Harvard CS50 Course.</span></a>
+        </footer>
+        <script>AOS.init();</script>
+        <script>
+            var val=0;
+            function rott()
+            {
+            val=val+1;
+            document.getElementById('cat-logo').style.webkitTransform="rotate("+val+"deg)";
+            document.getElementById('cat-logo').style.mozTransform="rotate("+val+"deg)";
+            }
+        </script>
+    </body>
+</html>

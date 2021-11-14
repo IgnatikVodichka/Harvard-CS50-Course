@@ -1,0 +1,141 @@
+#cat-logo {
+ -webkit-transform: rotate(90deg);
+ -moz-transform: rotate(90deg);
+ -ms-transform: rotate(90deg);
+ transform: rotate(90deg);
+ }
+
+* {
+    margin:0;
+    padding:0;
+}
+
+html, body{
+    height: 100%;
+}
+
+header {
+    height: 100px;
+    background: #1e2939;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigation {
+    background: #1e2939;
+    display: flex;
+    align-items: center;
+}
+
+.cat-logo {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin: 0 0 0 40px;
+}
+
+.container-ship {
+    width: 550px;
+    height: 320px;
+    border: solid;
+}
+
+.skate {
+    width: 400px;
+    height: 350px;
+    border: solid;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-item:hover{
+    color: #fe6b08;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.menu-item {
+    margin: 0 0 0 40px;
+    color: #4f5b70;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    transition: 0.2s ease-in-out;
+}
+
+.main-info-container {
+    min-width: 70%;
+}
+
+h1 {
+    margin-top: 30px;
+    margin-bottom:20px;
+    margin-left: 50px;
+}
+
+.main-paragraph {
+    width: 80%;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 40px;
+    color: #595959;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+#footer {
+    background: #1e2939;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    margin-top: 100px;
+    clear: both;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#footer a {
+    text-decoration: none;
+}
+
+.footer-text {
+    color: #fe6b08;
+}
+
+.socials button{
+    display: block;
+    margin: 20px 0;
+}
+
+.about-exwork, .about-hobbie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:30px;
+    margin-left:50px;
+}
+
+.work-paragraph, .hobbie-paragraph {
+    width: 70%;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 40px;
+    color: #595959;
+    margin: 0 0 0 20px;
+}
+
+.socials{
+    margin-left:50px;
+}
