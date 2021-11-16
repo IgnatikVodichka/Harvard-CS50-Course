@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1634978133023&amp;type=content-script&amp;dmn=ide-e9132bb434a54a98b002e003879eb262.ide.cs50.io&amp;app=com.brave.Browser.helper&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;uag="></script>
+<script type="text/javascript" nonce="ae0e84a9de6b467d9f9eac6a6a7" src="//local.adguard.org?ts=1634978133023&amp;name=AdGuard%20Extra&amp;type=user-script"></script><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Birthdays</title>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <h1>Birthdays</h1>
+        </div>
+        <div class="container">
+            <div class="section">
+                <h2>Add a Birthday</h2>
+                <div class = "form">
+                    <form action="/" method="post">
+                        <input name = "name" type="text" placeholder="Name">
+                        <input name = "month" type="number" min="1" max="12" placeholder="Month">
+                        <input name = "day" type="number" min="1" max="31" placeholder="Day">
+                        <input type="submit" value="Add Birthday">
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="section">
+
+                <h2>All Birthdays</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Birthday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for birthday in birthdays %}
+                            <tr>
+                                <td>{{ birthday.name }}</td>
+                                <td>{{ birthday.month }}/{{ birthday.day }}</td>
+                                <td><form action="{{ url_for('delete_entry') }}" method="post">
+                                    <input name="b_id" type="hidden" value="{{ birthday.id }}">
+                                    <input name="delete" type="submit" value="Delete"></form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
