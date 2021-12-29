@@ -7,16 +7,18 @@ from PIL import Image, ImageTk
 WIDTH = 1000
 HEIGHT = 1000
 BODY_SIZE = 40
-START_DELAY = 400
-LENGTH = 3
+START_DELAY = 1000
+LENGTH = 8
 
 count_body_width = WIDTH / BODY_SIZE
 count_body_height = HEIGHT / BODY_SIZE
 
+x = [0] * int(count_body_width)
+y = [0] * int(count_body_width)
+
 
 class Snake(Canvas):
-    x = False
-    y = False
+
     head_image = False
     head = False
     body = False
@@ -41,115 +43,110 @@ class Snake(Canvas):
         self.head = ImageTk.PhotoImage(self.head_image.resize(
             (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
         self.body = ImageTk.PhotoImage(Image.open(
-            "images/body.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
+            "images/body_horizontal.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
         self.apple = ImageTk.PhotoImage(Image.open(
             "images/apple.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
+        self.tail = ImageTk.PhotoImage(Image.open(
+            "images/tail.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
 
     def start_play(self):
         self.delay = START_DELAY
         self.direction = "Right"
         self.loss = False
-        self.x = [0] * int(count_body_width)
-        self.y = [0] * int(count_body_height)
+
         self.delete(ALL)
         self.spawn_actors()
         self.after(self.delay, self.timer)
 
-    def timer(self):
-        self.check_collision()
-        if not self.loss:
-            self.check_apple()
-            self.update_direction()
-            self.move_snake()
-            self.after(self.delay, self.timer)
-        else:
-            self.game_over()
-
     def spawn_actors(self):
         self.apple_spawn()
-        self.x[0] = int(count_body_width / 2) * BODY_SIZE
-        self.y[0] = int(count_body_height / 2) * BODY_SIZE
+        x[0] = int(count_body_width / 2) * BODY_SIZE
+        y[0] = int(count_body_height / 2) * BODY_SIZE
         for i in range(1, LENGTH):
-            self.x[i] = self.x[0] - BODY_SIZE * i
-            self.y[i] = self.y[0]
-        self.create_image(self.x[0], self.y[0], image=self.head,
-                          anchor="nw", tag="head")
+            x[i] = x[0] - BODY_SIZE * i
+            y[i] = y[0]
+        self.create_image(x[0], y[0], image=self.head, anchor="nw", tag="head")
         for i in range(LENGTH - 1, 0, -1):
-            self.create_image(self.x[i], self.y[i], image=self.body,
-                              anchor="nw", tag="body")
+            if i == LENGTH - 1:
+                self.create_image(x[i], y[i], image=self.tail,
+                                  anchor="nw", tag="tail")
+            else:
+                self.create_image(x[i], y[i], image=self.body,
+                                  anchor="nw", tag="body")
 
     def apple_spawn(self):
         apple = self.find_withtag("apple")
         if apple:
             self.delete(apple[0])
-        apple_x = random.randint(0, count_body_width - 5)
-        apple_y = random.randint(0, count_body_height - 5)
+        apple_x = random.randint(0, count_body_width - 1)
+        apple_y = random.randint(0, count_body_height - 1)
         self.create_image(apple_x * BODY_SIZE, apple_y *
                           BODY_SIZE, image=self.apple, anchor="nw", tag="apple")
-
-    def check_apple(self):
-        apple = self.find_withtag("apple")[0]
-        head = self.find_withtag("head")
-        body_last_part = self.find_withtag("body")[-1]
-        x1, y1, x2, y2 = self.bbox(head)
-        overlaps = self.find_overlapping(x1, y1, x2, y2)
-        for actor in overlaps:
-            if actor == apple:
-                tempx, tempy = self.coords(body_last_part)
-                self.apple_spawn()
-                self.create_image(
-                    tempx, tempy, image=self.body, anchor="nw", tag="body")
-                if self.delay > 100:
-                    self.delay -= 12
-
-    def check_collision(self):
-        head = self.find_withtag("head")
-        body = self.find_withtag("body")
-        x1, y1, x2, y2 = self.bbox(head)
-        overlaps = self.find_overlapping(x1, y1, x2, y2)
-        for b in body:
-            for actor in overlaps:
-                if actor == b:
-                    self.loss = True
-        if x1 < 0 or x2 > WIDTH:
-            self.loss = True
-        if y1 < 0 or y2 > HEIGHT:
-            self.loss = True
 
     def on_key_pressed(self, event):
         key = event.keysym
         if key == "Left" and self.direction != "Right":
             self.direction_temp = key
-        elif key == "Right" and self.direction != "Left":
+        if key == "Right" and self.direction != "Left":
             self.direction_temp = key
-        elif key == "Up" and self.direction != "Down":
+        if key == "Up" and self.direction != "Down":
             self.direction_temp = key
-        elif key == "Down" and self.direction != "Up":
+        if key == "Down" and self.direction != "Up":
             self.direction_temp = key
-        elif key == "space" and self.loss:
-            self.start_play()
 
     def update_direction(self):
         self.direction = self.direction_temp
         head = self.find_withtag("head")
+        body = self.find_withtag("body")
+        tail = self.find_withtag("tail")
         head_x, head_y = self.coords(head)
+        tail_x, tail_y = self.coords(tail)
         self.delete(head)
+        self.delete(body)
+        self.delete(tail)
+
         rotate_directions = {"Right": 0, "Up": 90, "Down": -90}
         if self.direction == "Left":
             self.head = ImageTk.PhotoImage(self.head_image.transpose(Image.FLIP_LEFT_RIGHT).resize(
                 (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
             self.create_image(head_x, head_y, image=self.head,
                               anchor="nw", tag="head")
+            self.tail = ImageTk.PhotoImage(Image.open(
+                "images/tail.png").transpose(Image.FLIP_LEFT_RIGHT).resize(
+                (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
+            self.create_image(tail_x, tail_y, image=self.tail,
+                              anchor="nw", tag="tail")
+
         else:
             self.head = ImageTk.PhotoImage(self.head_image.rotate(rotate_directions[self.direction]).resize(
                 (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
             self.create_image(head_x, head_y, image=self.head,
                               anchor="nw", tag="head")
+            self.tail = ImageTk.PhotoImage(Image.open(
+                "images/tail.png").rotate(rotate_directions[self.direction]).resize(
+                (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
+            self.create_image(tail_x, tail_y, image=self.tail,
+                              anchor="nw", tag="tail")
+            # for i in range(LENGTH - 1, 0, -1):
+            #     body_x, body_y = self.coords(body)
+            # self.body = ImageTk.PhotoImage(Image.open(
+            #     "images/body_horizontal.png").rotate(rotate_directions[self.direction]).resize(
+            #     (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
+            # for i in range(LENGTH - 1, 0, -1):
+            #     self.create_image(x[i], y[i], image=self.body,
+            #                       anchor="nw", tag="body")
+
+    def timer(self):
+        if not self.loss:
+            self.update_direction()
+            self.move_snake()
+            self.after(self.delay, self.timer)
 
     def move_snake(self):
         head = self.find_withtag("head")
         body = self.find_withtag("body")
-        items = body+head
+        tail = self.find_withtag("tail")
+        items = tail+body+head
         for i in range(len(items) - 1):
             current_x_y = self.coords(items[i])
             next_x_y = self.coords(items[i+1])
@@ -163,13 +160,6 @@ class Snake(Canvas):
             self.move(head, 0, -BODY_SIZE)
         elif self.direction == "Down":
             self.move(head, 0, BODY_SIZE)
-
-    def game_over(self):
-        self.delete(ALL)
-        self.create_text(self.winfo_width() / 2, self.winfo_height() / 2 - 60,
-                         text="Game Over", fill="red", font="Tahoma 40", tag="text")
-        self.create_text(self.winfo_width() / 2, self.winfo_height() / 2 + 30,
-                         text="Press space to try again", fill="white", font="Tahoma 25", tag="text")
 
 
 root = Tk()
