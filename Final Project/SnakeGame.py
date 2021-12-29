@@ -20,8 +20,7 @@ class Snake(Canvas):
     head_image = False
     head = False
     body = False
-    tail = False
-    apple = False
+    cat = False
     delay = 0
     direction = "Right"
     direction_temp = "Right"
@@ -37,13 +36,13 @@ class Snake(Canvas):
         self.pack()
 
     def load_resources(self):
-        self.head_image = Image.open("images/head.png")
+        self.head_image = Image.open("images/ducky.png")
         self.head = ImageTk.PhotoImage(self.head_image.resize(
             (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
         self.body = ImageTk.PhotoImage(Image.open(
-            "images/body.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
-        self.apple = ImageTk.PhotoImage(Image.open(
-            "images/apple.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
+            "images/duckling.png").resize((BODY_SIZE - 10, BODY_SIZE - 10), Image.ANTIALIAS))
+        self.cat = ImageTk.PhotoImage(Image.open(
+            "images/cat.png").resize((BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
 
     def start_play(self):
         self.delay = START_DELAY
@@ -58,7 +57,7 @@ class Snake(Canvas):
     def timer(self):
         self.check_collision()
         if not self.loss:
-            self.check_apple()
+            self.check_cat()
             self.update_direction()
             self.move_snake()
             self.after(self.delay, self.timer)
@@ -66,41 +65,41 @@ class Snake(Canvas):
             self.game_over()
 
     def spawn_actors(self):
-        self.apple_spawn()
+        self.cat_spawn()
         self.x[0] = int(count_body_width / 2) * BODY_SIZE
         self.y[0] = int(count_body_height / 2) * BODY_SIZE
         for i in range(1, LENGTH):
             self.x[i] = self.x[0] - BODY_SIZE * i
             self.y[i] = self.y[0]
         self.create_image(self.x[0], self.y[0], image=self.head,
-                          anchor="nw", tag="head")
+                          anchor="se", tag="head")
         for i in range(LENGTH - 1, 0, -1):
             self.create_image(self.x[i], self.y[i], image=self.body,
-                              anchor="nw", tag="body")
+                              anchor="se", tag="body")
 
-    def apple_spawn(self):
-        apple = self.find_withtag("apple")
-        if apple:
-            self.delete(apple[0])
+    def cat_spawn(self):
+        cat = self.find_withtag("cat")
+        if cat:
+            self.delete(cat[0])
         apple_x = random.randint(0, count_body_width - 5)
         apple_y = random.randint(0, count_body_height - 5)
         self.create_image(apple_x * BODY_SIZE, apple_y *
-                          BODY_SIZE, image=self.apple, anchor="nw", tag="apple")
+                          BODY_SIZE, image=self.cat, anchor="nw", tag="cat")
 
-    def check_apple(self):
-        apple = self.find_withtag("apple")[0]
+    def check_cat(self):
+        cat = self.find_withtag("cat")[0]
         head = self.find_withtag("head")
         body_last_part = self.find_withtag("body")[-1]
         x1, y1, x2, y2 = self.bbox(head)
         overlaps = self.find_overlapping(x1, y1, x2, y2)
         for actor in overlaps:
-            if actor == apple:
+            if actor == cat:
                 tempx, tempy = self.coords(body_last_part)
-                self.apple_spawn()
+                self.cat_spawn()
                 self.create_image(
-                    tempx, tempy, image=self.body, anchor="nw", tag="body")
+                    tempx, tempy, image=self.body, anchor="se", tag="body")
                 if self.delay > 100:
-                    self.delay -= 12
+                    self.delay -= 20
 
     def check_collision(self):
         head = self.find_withtag("head")
@@ -132,6 +131,7 @@ class Snake(Canvas):
     def update_direction(self):
         self.direction = self.direction_temp
         head = self.find_withtag("head")
+        body = self.find_withtag("body")
         head_x, head_y = self.coords(head)
         self.delete(head)
         rotate_directions = {"Right": 0, "Up": 90, "Down": -90}
@@ -139,12 +139,26 @@ class Snake(Canvas):
             self.head = ImageTk.PhotoImage(self.head_image.transpose(Image.FLIP_LEFT_RIGHT).resize(
                 (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
             self.create_image(head_x, head_y, image=self.head,
-                              anchor="nw", tag="head")
+                              anchor="se", tag="head")
+            self.body = ImageTk.PhotoImage(Image.open(
+                "images/duckling.png").transpose(Image.FLIP_LEFT_RIGHT).resize((BODY_SIZE - 10, BODY_SIZE - 10), Image.ANTIALIAS))
+            for i in range(len(body)):
+                body_x, body_y = self.coords(body[i])
+                self.delete(body[i])
+                self.create_image(body_x, body_y, image=self.body,
+                                  anchor="se", tag="body")
         else:
             self.head = ImageTk.PhotoImage(self.head_image.rotate(rotate_directions[self.direction]).resize(
                 (BODY_SIZE, BODY_SIZE), Image.ANTIALIAS))
             self.create_image(head_x, head_y, image=self.head,
-                              anchor="nw", tag="head")
+                              anchor="se", tag="head")
+            self.body = ImageTk.PhotoImage(Image.open(
+                "images/duckling.png").rotate(rotate_directions[self.direction]).resize((BODY_SIZE - 10, BODY_SIZE - 10), Image.ANTIALIAS))
+            for i in range(len(body)):
+                body_x, body_y = self.coords(body[i])
+                self.delete(body[i])
+                self.create_image(body_x, body_y, image=self.body,
+                                  anchor="se", tag="body")
 
     def move_snake(self):
         head = self.find_withtag("head")
