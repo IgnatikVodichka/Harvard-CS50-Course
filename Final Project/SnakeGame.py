@@ -187,9 +187,17 @@ class Snake(Canvas):
 
 
 root = Tk()
-root.title("SnakeGmae")
+root.title("Duck Game")
 root.board = Snake()
 root.resizable(False, False)
+root.board.create_text(500, 460, text="CS50 Final Project",
+                       fill="grey", font=('Helvetica 25 bold'))
+root.board.create_text(500, 520, text="Duck Game",
+                       fill="grey", font=('Helvetica 20 bold'))
+root.board.create_text(500, 560, text="By Gnat Katrechko",
+                       fill="grey", font=('Helvetica 15 bold'))
+root.board.create_text(500, 580, text="Odessa, Ukraine",
+                       fill="grey", font=('Helvetica 15 bold'))
 
 w_user_width = root.winfo_screenwidth()
 w_user_height = root.winfo_screenheight()
